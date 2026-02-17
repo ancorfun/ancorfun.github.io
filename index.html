@@ -1,24 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ancor.fun</title>
-<link rel="stylesheet" href="assets/styles.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life Simulator Universe + Password Chaos</title>
+
+<style>
+/* ---- GENERAL ---- */
+body {
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#0d0d0d;
+  color:white;
+  text-align:center;
+}
+
+nav {
+  background: #111;
+  padding: 20px;
+}
+
+nav button {
+  margin: 5px;
+  padding: 10px 20px;
+  background: #1f1f1f;
+  border:1px solid #444;
+  color:white;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+nav button:hover {
+  background:#333;
+}
+
+.section {
+  padding: 40px;
+}
+
+.hidden {
+  display:none;
+}
+
+/* ---- CANVAS ---- */
+canvas {
+  background:black;
+  margin-top:20px;
+  width:80%;
+  height:400px;
+}
+
+/* ---- PASSWORD GAME ---- */
+#passwordRules {
+  margin-top:20px;
+  max-height:350px;
+  overflow-y:auto;
+  text-align:left;
+}
+
+.rule {
+  padding:6px;
+  margin:4px 0;
+  border-radius:5px;
+  font-size:13px;
+}
+
+.valid {
+  background:#123a1e;
+  color:#4cff7c;
+}
+
+.invalid {
+  background:#3a1212;
+  color:#ff4c4c;
+}
+
+#passwordSuccess {
+  margin-top:20px;
+  font-size:22px;
+  color:#4cff7c;
+  display:none;
+}
+
+input {
+  width:100%;
+  padding:15px;
+  font-size:18px;
+  margin-top:20px;
+  background:#1a1a1a;
+  border:1px solid #444;
+  color:white;
+}
+</style>
 </head>
 <body>
 
+<!-- NAVIGATION -->
 <nav>
-  <h1>ancor.fun</h1>
-  <div class="nav-buttons">
-    <button onclick="showSection('life')">Life</button>
-    <button onclick="showSection('decision')">Decisions</button>
-    <button onclick="showSection('universe')">Universe</button>
-    <button onclick="showSection('football')">Football</button>
-    <button onclick="showSection('butterfly')">Butterfly</button>
-  </div>
+  <h1>🌌 Life Simulator Universe</h1>
+  <button onclick="showSection('life')">Life</button>
+  <button onclick="showSection('decision')">Decisions</button>
+  <button onclick="showSection('universe')">Universe</button>
+  <button onclick="showSection('football')">Football</button>
+  <button onclick="showSection('butterfly')">Butterfly</button>
+  <button onclick="showSection('password')">Password</button>
 </nav>
 
+<!-- LIFE IN NUMBERS -->
 <section id="life" class="section">
   <h2>🧮 Life in Numbers</h2>
   <input type="number" id="ageInput" placeholder="Enter your age" />
@@ -26,6 +114,7 @@
   <div id="lifeResults"></div>
 </section>
 
+<!-- DECISION ENGINE -->
 <section id="decision" class="section hidden">
   <h2>🧠 Decision Engine</h2>
   <p>Choose your path:</p>
@@ -34,12 +123,14 @@
   <div id="decisionResult"></div>
 </section>
 
+<!-- UNIVERSE GENERATOR -->
 <section id="universe" class="section hidden">
   <h2>🌌 Infinite Universe</h2>
   <button onclick="generateUniverse()">Generate Universe</button>
   <canvas id="universeCanvas"></canvas>
 </section>
 
+<!-- FOOTBALL CAREER SIM -->
 <section id="football" class="section hidden">
   <h2>⚽ Football Career Sim</h2>
   <select id="position">
@@ -52,6 +143,7 @@
   <div id="careerResult"></div>
 </section>
 
+<!-- BUTTERFLY EFFECT -->
 <section id="butterfly" class="section hidden">
   <h2>🦋 The Butterfly Effect</h2>
   <button onclick="butterflyChoice('help')">Help someone</button>
@@ -59,12 +151,136 @@
   <div id="butterflyResult"></div>
 </section>
 
-<script src="js/main.js"></script>
-<script src="js/lifeNumbers.js"></script>
-<script src="js/decisionEngine.js"></script>
-<script src="js/universeGenerator.js"></script>
-<script src="js/footballSim.js"></script>
-<script src="js/butterflyEffect.js"></script>
+<!-- PASSWORD CHAOS GAME -->
+<section id="password" class="section hidden">
+  <h2>🔐 Ultimate Password Chaos</h2>
+  <p>Create a password that satisfies ALL rules:</p>
+  <input type="text" id="passwordInput" placeholder="Enter password...">
+  <div id="passwordRules"></div>
+  <div id="passwordSuccess">🎉 YOU DEFEATED THE SYSTEM!</div>
+</section>
+
+<!-- SCRIPTS -->
+<script>
+// ---------- SHOW SECTION ----------
+function showSection(id){
+  document.querySelectorAll(".section").forEach(sec=>{
+    sec.classList.add("hidden");
+  });
+  document.getElementById(id).classList.remove("hidden");
+}
+
+// ---------- LIFE IN NUMBERS ----------
+function calculateLife(){
+  const age=parseInt(document.getElementById("ageInput").value);
+  if(!age) return;
+  const days=Math.floor(age*365.25);
+  const hours=days*24;
+  const minutes=hours*60;
+  const breaths=minutes*16;
+  const heartbeats=minutes*70;
+  document.getElementById("lifeResults").innerHTML=
+  `<p>Days lived: ${days.toLocaleString()}</p>
+   <p>Hours slept (approx.): ${(hours/3).toLocaleString()}</p>
+   <p>Breaths taken: ${breaths.toLocaleString()}</p>
+   <p>Heartbeats: ${heartbeats.toLocaleString()}</p>`;
+}
+
+// ---------- DECISION ENGINE ----------
+function makeDecision(type){
+  let result="";
+  if(type==="risk") result="You built a startup and became wealthy.";
+  else result="You lived a peaceful and stable life.";
+  document.getElementById("decisionResult").innerText=result;
+}
+
+// ---------- UNIVERSE GENERATOR ----------
+function generateUniverse(){
+  const canvas=document.getElementById("universeCanvas");
+  const ctx=canvas.getContext("2d");
+  canvas.width=canvas.offsetWidth;
+  canvas.height=400;
+  ctx.fillStyle="black";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  for(let i=0;i<200;i++){
+    ctx.fillStyle="white";
+    ctx.beginPath();
+    ctx.arc(Math.random()*canvas.width,Math.random()*canvas.height,Math.random()*2,0,Math.PI*2);
+    ctx.fill();
+  }
+}
+
+// ---------- FOOTBALL CAREER SIM ----------
+function simulateCareer(){
+  const position=document.getElementById("position").value;
+  const goals=Math.floor(Math.random()*300);
+  const trophies=Math.floor(Math.random()*20);
+  document.getElementById("careerResult").innerHTML=
+  `<p>Position: ${position}</p>
+   <p>Goals scored: ${goals}</p>
+   <p>Trophies won: ${trophies}</p>
+   <p>Retired as a legend.</p>`;
+}
+
+// ---------- BUTTERFLY EFFECT ----------
+function butterflyChoice(choice){
+  let result="";
+  if(choice==="help") result="10 years later, that person helped you build a company.";
+  else result="Years later, you wonder what could have been.";
+  document.getElementById("butterflyResult").innerText=result;
+}
+
+// ---------- PASSWORD CHAOS GAME ----------
+const passwordInput=document.getElementById("passwordInput");
+const rulesDiv=document.getElementById("passwordRules");
+const passwordSuccess=document.getElementById("passwordSuccess");
+
+let rules=[];
+
+// 10 BASE RULES
+rules.push(
+  {text:"Minimum 30 characters", check:p=>p.length>=30},
+  {text:"Contains 'life'", check:p=>p.toLowerCase().includes("life")},
+  {text:"Contains 'universe'", check:p=>p.toLowerCase().includes("universe")},
+  {text:"At least 4 uppercase letters", check:p=>(p.match(/[A-Z]/g)||[]).length>=4},
+  {text:"At least 6 numbers", check:p=>(p.match(/[0-9]/g)||[]).length>=6},
+  {text:"At least 2 special characters (!@#$%^&*)", check:p=>(p.match(/[!@#$%^&*]/g)||[]).length>=2},
+  {text:"At least 2 emojis", check:p=>(p.match(/[\u{1F600}-\u{1F64F}]/gu)||[]).length>=2},
+  {text:"Sum of digits > 40", check:p=>{
+    const nums=p.match(/[0-9]/g); if(!nums) return false;
+    return nums.reduce((a,b)=>a+parseInt(b),0)>40;
+  }},
+  {text:"Cannot have spaces", check:p=>!p.includes(" ")},
+  {text:"Cannot repeat the same character 4+ times in a row", check:p=>!/(.)\1\1\1/.test(p)}
+);
+
+// 150 CHAOS MATHEMATICAL RULES
+for(let i=2;i<=151;i++){
+  rules.push({
+    text:`Password length must NOT be divisible by ${i}`,
+    check:p=>p.length % i !== 0
+  });
+}
+
+// RENDER FUNCTION
+function renderPassword(p){
+  rulesDiv.innerHTML="";
+  let validCount=0;
+  rules.forEach(rule=>{
+    const ok=rule.check(p);
+    if(ok) validCount++;
+    const div=document.createElement("div");
+    div.className="rule "+(ok?"valid":"invalid");
+    div.textContent=rule.text;
+    rulesDiv.appendChild(div);
+  });
+  passwordSuccess.style.display=(validCount===rules.length)?"block":"none";
+}
+
+passwordInput.addEventListener("input",e=>{
+  renderPassword(e.target.value);
+});
+</script>
 
 </body>
 </html>
