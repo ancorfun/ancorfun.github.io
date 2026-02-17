@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0d0d0d;
+  color: white;
+  text-align: center;
+}
+
+nav {
+  background: #111;
+  padding: 20px;
+}
+
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  background: #1f1f1f;
+  border: 1px solid #444;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #333;
+}
+
+.section {
+  padding: 40px;
+}
+
+.hidden {
+  display: none;
+}
+
+canvas {
+  background: black;
+  margin-top: 20px;
+  width: 80%;
+  height: 400px;
+}
