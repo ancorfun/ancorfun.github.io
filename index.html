@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Life Simulator Universe</title>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+<nav>
+  <h1>🌌 Life Simulator Universe</h1>
+  <div class="nav-buttons">
+    <button onclick="showSection('life')">Life</button>
+    <button onclick="showSection('decision')">Decisions</button>
+    <button onclick="showSection('universe')">Universe</button>
+    <button onclick="showSection('football')">Football</button>
+    <button onclick="showSection('butterfly')">Butterfly</button>
+  </div>
+</nav>
+
+<section id="life" class="section">
+  <h2>🧮 Life in Numbers</h2>
+  <input type="number" id="ageInput" placeholder="Enter your age" />
+  <button onclick="calculateLife()">Calculate</button>
+  <div id="lifeResults"></div>
+</section>
+
+<section id="decision" class="section hidden">
+  <h2>🧠 Decision Engine</h2>
+  <p>Choose your path:</p>
+  <button onclick="makeDecision('risk')">Risk</button>
+  <button onclick="makeDecision('stable')">Stability</button>
+  <div id="decisionResult"></div>
+</section>
+
+<section id="universe" class="section hidden">
+  <h2>🌌 Infinite Universe</h2>
+  <button onclick="generateUniverse()">Generate Universe</button>
+  <canvas id="universeCanvas"></canvas>
+</section>
+
+<section id="football" class="section hidden">
+  <h2>⚽ Football Career Sim</h2>
+  <select id="position">
+    <option>Forward</option>
+    <option>Midfielder</option>
+    <option>Defender</option>
+    <option>Goalkeeper</option>
+  </select>
+  <button onclick="simulateCareer()">Simulate Career</button>
+  <div id="careerResult"></div>
+</section>
+
+<section id="butterfly" class="section hidden">
+  <h2>🦋 The Butterfly Effect</h2>
+  <button onclick="butterflyChoice('help')">Help someone</button>
+  <button onclick="butterflyChoice('ignore')">Ignore someone</button>
+  <div id="butterflyResult"></div>
+</section>
+
+<script src="js/main.js"></script>
+<script src="js/lifeNumbers.js"></script>
+<script src="js/decisionEngine.js"></script>
+<script src="js/universeGenerator.js"></script>
+<script src="js/footballSim.js"></script>
+<script src="js/butterflyEffect.js"></script>
+
+</body>
+</html>
